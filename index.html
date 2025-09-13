@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crazy Questions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent; /* Prevents flash on mobile tap */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        /* Style for the "No" button to enable smooth transitions */
+        #no-btn {
+            position: absolute;
+            /* Using a fun "back out" easing for a cuter effect */
+            transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        .vanish {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        /* Cute pulse animation for the 'Yes' button */
+        @keyframes pulse {
+            0% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
+            }
+            70% {
+                transform: scale(1.15);
+                box-shadow: 0 0 0 12px rgba(52, 211, 153, 0);
+            }
+            100% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 0 rgba(52, 211, 153, 0);
+            }
+        }
+        .pulse-animation {
+            animation: pulse 1.5s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-300 via-purple-300 to-indigo-400 min-h-screen flex items-center justify-center p-4">
+
+    <!-- Start Screen -->
+    <div id="start-screen" class="w-full max-w-lg text-center">
+        <div class="card p-8 md:p-12 rounded-2xl shadow-2xl">
+            <!-- Cute SVG Image -->
+            <div class="flex justify-center mb-6">
+                <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Face -->
+                    <circle cx="50" cy="50" r="45" fill="#FFDE34" stroke="#422B0D" stroke-width="3"></circle>
+                    <!-- Right eye (winking) -->
+                    <path d="M 65 45 Q 70 50 75 45" stroke="#422B0D" stroke-width="5" fill="none" stroke-linecap="round"></path>
+                    <!-- Left eye -->
+                    <circle cx="35" cy="50" r="7" fill="#422B0D"></circle>
+                    <!-- Mouth with tongue -->
+                    <path d="M 35 70 Q 50 85 65 70" stroke="#422B0D" stroke-width="5" fill="none" stroke-linecap="round"></path>
+                    <path d="M 50 75 C 55 80, 60 80, 62 70" fill="#FF7892" stroke="#422B0D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8">Are you ready to start answering some crazy questions?😏🫣</h1>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 relative h-32 sm:h-auto">
+                <button id="yes-btn" class="w-full sm:w-32 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+                    Yes
+                </button>
+                <!-- The "No" button needs a container to constrain its movement on smaller screens -->
+                <div id="no-btn-container" class="w-full sm:w-32 h-14 relative">
+                     <button id="no-btn" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+                        No
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Questions Screen -->
+    <div id="questions-screen" class="hidden w-full max-w-2xl">
+        <div class="card p-8 md:p-10 rounded-2xl shadow-2xl">
+            <form id="question-form">
+                <div class="space-y-8">
+                    <!-- Question 1 -->
+                    <div>
+                        <label for="q1" class="block text-lg font-semibold text-gray-700 mb-2">Q1. What do you consider me as?😏</label>
+                        <input type="text" id="q1" name="q1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent transition" placeholder="Your honest answer...">
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-700 mb-2">Q2. Itna flirt krne mein maza aata hai?😂</label>
+                        <div class="flex items-center gap-6">
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="q2" value="Yes" class="h-5 w-5 text-purple-500 focus:ring-purple-400">
+                                <span class="text-gray-700">Yes</span>
+                            </label>
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="q2" value="No" class="h-5 w-5 text-purple-500 focus:ring-purple-400">
+                                <span class="text-gray-700">No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div>
+                        <label for="q3" class="block text-lg font-semibold text-gray-700 mb-2">Q3. What if I propose you some day!?😏😂🫣</label>
+                        <input type="text" id="q3" name="q3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent transition" placeholder="Tell me... I'm waiting...">
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div>
+                        <label for="q4" class="block text-lg font-semibold text-gray-700 mb-2">Q4. Mujhme aisa kya acha laga kii just friends and best friend kee beech kaa phase hii miss kar diya?😂😂🫣</label>
+                        <input type="text" id="q4" name="q4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent transition" placeholder="I'm really curious...">
+                    </div>
+
+                    <!-- Question 5 -->
+                    <div>
+                        <label for="q5" class="block text-lg font-semibold text-gray-700 mb-2">Q5. Agar kabhi tum gussa hoo gayi too tumhein manane kaa koi easy tareeka?😂🫣😏🐯</label>
+                        <input type="text" id="q5" name="q5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent transition" placeholder="For future reference 😉...">
+                    </div>
+                </div>
+
+                <div class="mt-10 text-center">
+                     <button type="submit" class="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+                        Submit Your Answers! 😉
+                    </button>
+                </div>
+            </form>
+            <p class="text-center text-gray-600 mt-8 text-sm">Abhi too itna hii dimaag mein ayaa!!😂🫣</p>
+        </div>
+    </div>
+    
+    <!-- Submission Message Screen -->
+    <div id="thanks-screen" class="hidden w-full max-w-lg text-center">
+        <div class="card p-8 md:p-12 rounded-2xl shadow-2xl">
+            <h1 class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">Thank You!</h1>
+            <p class="text-gray-700 mt-4 text-lg">Your secrets are safe with me... maybe! 😉</p>
+        </div>
+    </div>
+
+
+    <script>
+        const startScreen = document.getElementById('start-screen');
+        const questionsScreen = document.getElementById('questions-screen');
+        const thanksScreen = document.getElementById('thanks-screen');
+
+        const yesBtn = document.getElementById('yes-btn');
+        const noBtn = document.getElementById('no-btn');
+        const noBtnContainer = document.getElementById('no-btn-container');
+        const form = document.getElementById('question-form');
+
+        const showQuestions = () => {
+            startScreen.classList.add('hidden');
+            questionsScreen.classList.remove('hidden');
+        };
+
+        // Event listener for the "Yes" button
+        yesBtn.addEventListener('click', showQuestions);
+
+        const makeNoVanish = () => {
+             // Only run the animation once
+            if (noBtn.classList.contains('vanish')) return;
+
+            // Add the vanish class to trigger the cute animation
+            noBtn.classList.add('vanish');
+            
+            // Make the 'Yes' button more inviting with a pulse and new text
+            yesBtn.classList.add('pulse-animation');
+            yesBtn.textContent = 'This way! 🥰';
+
+            // Clean up animation class so it can run again if needed
+            setTimeout(() => {
+                yesBtn.classList.remove('pulse-animation');
+            }, 1500);
+
+            // Hide the button's container completely after animation
+            setTimeout(() => {
+                noBtnContainer.style.display = 'none';
+            }, 500);
+        };
+
+        // When the user tries to click "No", it just vanishes
+        noBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // Stop any default action
+            makeNoVanish();
+        });
+        
+        // Vanish when the cursor gets near or on first touch
+        noBtn.addEventListener('mouseover', makeNoVanish);
+        noBtn.addEventListener('touchstart', (e) => {
+            // prevent click events from firing on touch devices
+            e.preventDefault();
+            makeNoVanish();
+        });
+        
+        // Handle form submission
+        form.addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevent the form from actually submitting
+            questionsScreen.classList.add('hidden');
+            thanksScreen.classList.remove('hidden');
+        });
+    </script>
+
+</body>
+</html>
+
+
